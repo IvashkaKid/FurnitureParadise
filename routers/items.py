@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Path
+from pydantic import BaseModel
 
 router = APIRouter()
 
@@ -12,5 +13,9 @@ def read_root():
     ]
 
 @router.get("/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id, "name": "first"}
+def read_item(item_id: int = Path(..., gt=1)):
+    return {
+        "item_id": {
+            "id": item_id,
+        },
+        }
